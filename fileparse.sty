@@ -1,0 +1,56 @@
+%    \begin{macrocode}
+%<!COPYRIGHT>
+\ProvidesPackage{fileparse}[%
+%<!DATE>
+%<!VERSION>
+%<*DRIVER>
+    2099/01/01 develop
+%</DRIVER>
+    fileparse]
+%    \end{macrocode}
+%
+%
+%
+
+\newcommand*{\fileparse}[1]{%
+    \edef\fileparsepath{#1}%
+    \@onelevel@sanitize\fileparsepath
+    \let\fileparsearea\@empty
+    \let\fileparsedir\@empty
+    \iftrue\expandafter\fileparse@dir\fileparsepath/\fi
+}
+
+\def\fileparse@endmarker{/}
+\def\fileparse@dir#1/#2\fi{%
+    \fi
+    \ifx\@nnil#2\@nnil
+        \def\fileparsename{#1}%
+        \expandafter\fileparse@filename@
+    \else
+        \edef\fileparsedir{\fileparsedir#1/}%
+        \fileparse@dir#2%
+    \fi
+}
+
+\def\fileparse@filename@{%
+    \iftrue
+    \let\fileparsebase\@gobble
+    \expandafter\fileparse@filename\fileparsename.\fi
+}
+
+\def\fileparse@filename#1.#2\fi{%
+    \fi
+    \ifx\@nnil#2\@nnil
+        \ifx\fileparsebase\@gobble
+            \let\fileparseext\relax
+            \def\fileparsebase{#1}%
+        \else
+            \def\fileparseext{#1}%
+        \fi
+    \else
+        \edef\fileparsebase{\fileparsebase.#1}%
+        \fileparse@filename#2%
+    \fi
+}
+
+

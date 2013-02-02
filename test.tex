@@ -1,0 +1,40 @@
+\documentclass{article}
+
+\usepackage{fileparse}
+
+\usepackage[abspath]{currfile}
+
+\def\test#1{%
+    \par\noindent
+    \fileparse{#1}%
+    Path: \fileparsepath\\
+    Area: \fileparsearea\\
+    Dir: \fileparsedir\\
+    Name: \fileparsename\\
+    Base: \fileparsebase\\
+    Ext: \fileparseext\\
+    Result 1: \edef\result{\fileparsearea\fileparsedir\fileparsebase.\fileparseext}%
+        \ifx\result\fileparsepath
+            OK!
+        \else
+            FAIL: `\result' != `\fileparsepath'
+        \fi
+        \\
+    Result 2: \edef\result{\fileparsebase.\fileparseext}%
+        \ifx\result\fileparsename
+            OK!
+        \else
+            FAIL: `\result' != `\fileparsename'
+        \fi
+    \bigskip
+}
+
+\begin{document}
+\test{/path/a/b/c/file.tex}
+\test{/path/a/b/c/file.it.tex}
+\test{/path/a/b/c/file.it.really.good.tex}
+
+\test{\currfileabspath}
+
+\end{document}
+
