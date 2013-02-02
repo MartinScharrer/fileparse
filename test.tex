@@ -13,14 +13,15 @@
     Name: \fileparsename\\
     Base: \fileparsebase\\
     Ext: \fileparseext\\
-    Result 1: \edef\result{\fileparsearea\fileparsedir\fileparsebase.\fileparseext}%
+    Dot Ext: \fileparsedotext\\
+    Result 1: \edef\result{\fileparsearea\fileparsedir\fileparsebase\fileparsedotext}%
         \ifx\result\fileparsepath
             OK!
         \else
             FAIL: `\result' != `\fileparsepath'
         \fi
         \\
-    Result 2: \edef\result{\fileparsebase.\fileparseext}%
+    Result 2: \edef\result{\fileparsebase\ifx\fileparseext\empty\else.\fi\fileparseext}%
         \ifx\result\fileparsename
             OK!
         \else
@@ -33,6 +34,10 @@
 \test{/path/a/b/c/file.tex}
 \test{/path/a/b/c/file.it.tex}
 \test{/path/a/b/c/file.it.really.good.tex}
+
+\test{/path/a/b/c/file.tex/}
+
+\test{/path/a/b/c/file.tex/withoutext}
 
 \test{\currfileabspath}
 
