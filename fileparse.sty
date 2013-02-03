@@ -12,6 +12,11 @@
 %
 %
 
+\gdef\fileparse@skipif#1\fi{%
+    \fi#1%
+}
+
+\iftrue
 \begingroup
 \catcode`\/=12
 \catcode`\.=12
@@ -25,21 +30,21 @@
     \let\fileparsebase\@gobble
     \let\fileparsedotext\@empty
     \let\fileparseext\fileparsedefaultext
-    \iftrue\expandafter\fileparse@dir\fileparsepath/\fi
+    \expandafter\fileparse@dir\fileparsepath/\@nnil
 }
 %
 \gdef\fileparsedirsep{/}
 \gdef\fileparsefilesep{.}
 \gdef\fileparsedefaultext{tex}
+
 %
-\gdef\fileparse@dir#1/#2\fi{%
-    \fi
+\gdef\fileparse@dir#1/#2\@nnil{%
     \ifx\@nnil#2\@nnil
         \def\fileparsename{#1}%
         \expandafter\fileparse@filename@
     \else
         \edef\fileparsedir{\fileparsedir#1/}%
-        \fileparse@dir#2%
+        \fileparse@skipif{\fileparse@dir#2\@nnil}%
     \fi
 }
 %
@@ -52,12 +57,11 @@
             \let\fileparseext\@empty
         \fi
     \else
-        \expandafter\fileparse@filename\fileparsename.%
+        \fileparse@skipif{\expandafter\fileparse@filename\fileparsename.\@nnil}%
     \fi
 }
 %
-\gdef\fileparse@filename#1.#2\fi{%
-    \fi
+\gdef\fileparse@filename#1.#2\@nnil{%
     \ifx\@nnil#2\@nnil
         \ifx\fileparsebase\@gobble
             \def\fileparsebase{#1}%
@@ -67,10 +71,11 @@
         \def\fileparsedotext{.\fileparseext}%
     \else
         \edef\fileparsebase{\fileparsebase.#1}%
-        \fileparse@filename#2%
+        \fileparse@skipif{\fileparse@filename#2\@nnil}%
     \fi
 }
 %
 
 \endgroup
+\fi
 
