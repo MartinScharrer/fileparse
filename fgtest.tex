@@ -1,0 +1,20 @@
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage{findfile}
+
+\begin{document}
+
+\findgraphicsfile{example-image.pdf}%
+
+\typeout{%
+\iffilefound
+    Found: \filefound
+\else
+    Not Found!
+\fi
+}
+
+
+\end{document}
+

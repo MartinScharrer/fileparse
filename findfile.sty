@@ -1,0 +1,48 @@
+
+\def\findfilepath{{}}
+\def\@findfilepath{\findfilepath}
+
+\def\findfilequote#1{#1 }
+
+\newif\iffilefound
+
+\newcommand*\filefound{}
+
+\newcommand*\findfile{%
+    \filefoundfalse
+    \let\filefound\relax
+    \begingroup
+    \@findfile
+}
+
+\def\@findfile#1{%
+    \edef\@tempa{\endgroup\noexpand\@tfor\noexpand\@tempa:=\@findfilepath}%
+    \@tempa\do{%
+        \openin\@inputcheck\@tempa\findfilequote{#1}%
+        \ifeof\@inputcheck\else
+            \edef\filefound{\@tempa#1}%
+            \filefoundtrue
+            \closein\@inputcheck
+            \@break@tfor
+        \fi
+    }%
+}
+
+\def\findfilepath@input{%
+    \expandafter\ifx\csname input@path\endcsname\relax
+    \else\input@path\fi
+}
+
+\def\findfilepath@graphics{%
+    \expandafter\ifx\csname Ginput@path\endcsname\relax
+    \else\Ginput@path\fi
+}
+
+\newcommand\findgraphicsfile{%
+    \filefoundfalse
+    \let\filefound\relax
+    \begingroup
+    \def\@findfilepath{{}\findfilepath@graphics}
+    \@findfile
+}
+

@@ -1,0 +1,18 @@
+\documentclass{article}
+
+\usepackage{findfile}
+
+\begin{document}
+
+\findfile{test.tex}%
+
+\typeout{%
+    \iffilefound
+        Found: \filefound
+    \else
+        File not found
+    \fi
+}
+
+\end{document}
+
