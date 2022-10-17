@@ -1,8 +1,8 @@
 LaTeX package 'fileparse'
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-Copyright (c) 2013-2016 by Martin Scharrer <martin@scharrer-online.de>
+Copyright (c) 2013-2022 by Martin Scharrer <martin.scharrer@web.de>
 CTAN: http://www.ctan.org/pkg/fileparse
-Code repository: https://bitbucket.org/martin_scharrer/fileparse
+Code repository: https://github.com/MartinScharrer/fileparse/
 
 The 'fileparse' package provides macros for package and document authors
 to parse a given file path into its different parts, like basename,
